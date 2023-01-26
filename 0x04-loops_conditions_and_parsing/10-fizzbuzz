@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-# Bash script that displays number from 1 to 100.
+# displays Holberton School 10 times
 
-COUNT=1
-while [ $COUNT -lt 101 ]
+COUNTER=1
+while [ $COUNTER -lt 101 ]
 do
-	if [ $((COUNT%15)) = 0 ]
+	if [ $((COUNTER%15)) = 0 ]
 	then
 		echo "FizzBuzz"
-	elif [ $((COUNT%3)) = 0 ]
+	elif [ $((COUNTER%3)) = 0 ]
 	then
 		echo "Fizz"
-	elif [ $((COUNT%5)) = 0 ]
+	elif [ $((COUNTER%5)) = 0 ]
 	then
 		echo "Buzz"
 	else
-		echo "$COUNT"
+		echo "$COUNTER"
 	fi
-	let COUNT+=1
+	COUNTER=$(( COUNTER + 1))
 done
