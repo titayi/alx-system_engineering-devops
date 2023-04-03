@@ -1,19 +1,16 @@
 #!/usr/bin/env bash
-# Install Nginx
+# Script that configures a new Ubuntu machine to respect above requirements
 
 sudo apt-get update
-sudo apt-get install nginx -y
+sudo apt-get install -y nginx
 
-# create a hello world page
 echo "Hello World!" | sudo tee /var/www/html/index.html
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com/watch?v=OewmXsAmN24 permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# create a redirection for our website
-sudo sed -i '/server_name _;/a \	location /redirect_me {\n		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n	}' /etc/nginx/sites-available/default
+# Add a redirect for error 404
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-
-# Create a custom 404 page
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
-
-# Configure Nginx to use the custom 404 page
-sudo sed -i '/server_name _;/a \        error_page 404 /custom_404.html;\n        location = /custom_404.html {\n                internal;\n        }' /etc/nginx/sites-available/default
-sudo service nginx start
+sudo service nginx restart
