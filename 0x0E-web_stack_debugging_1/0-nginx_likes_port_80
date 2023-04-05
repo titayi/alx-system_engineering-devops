@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Bash script with commands to configure nginx server
+
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+ls -l /etc/nginx/sites-enabled/default
+service nginx restart
