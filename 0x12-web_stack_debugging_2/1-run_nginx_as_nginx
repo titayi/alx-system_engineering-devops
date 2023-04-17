@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Configurations
+sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
+sed -i "s/80/8080/g" /etc/nginx/sites-available/default
+chmod 644 /etc/nginx/nginx.conf
+
+# Apache2 config
+pkill apache2
+
+# Starting nginx
+sudo -u nginx service nginx start
